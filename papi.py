@@ -1,5 +1,5 @@
 from flask import Flask
-from api_fetcher import send_request
+from api_fetcher.py import send_request
 
 app = Flask(__name__)
 
