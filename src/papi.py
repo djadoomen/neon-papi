@@ -3,11 +3,9 @@ from wsgiref import simple_server
 
 from api_fetcher import SendRequest
 
-from controller.quote_resource import QuoteResource
 from controller.request_node import RequestNode
 
 app = falcon.API()
-app.add_route('/quote', QuoteResource())
 app.add_route('/request', RequestNode(SendRequest()))
 
 if __name__ == '__main__':
