@@ -1,4 +1,4 @@
-import json, requests, time
+import json, requests
 
 _URL = "http://192.168.0.16:8545/"
 _HEADERS = {'content-type': 'application/json'}
