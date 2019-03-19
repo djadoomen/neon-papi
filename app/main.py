@@ -1,8 +1,6 @@
 from flask import Flask
 from api_fetcher import SendRequest
 
-from controller.request_node import RequestNode
-
 app = Flask(__name__)
 
 @app.route("/")
