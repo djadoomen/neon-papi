@@ -1,9 +1,3 @@
-FROM python:3.7-alpine
+FROM tiangolo/uwsgi-nginx-flask:python3.7
 
-WORKDIR /usr/src/app
-
-COPY src ./
-COPY requirements.txt ./
-RUN pip install --no-cache-dir -r requirements.txt
-
-CMD python papi.py
+COPY ./app /app

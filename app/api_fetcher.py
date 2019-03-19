@@ -13,6 +13,7 @@ class SendRequest():
 
 	'''Sends request to RPC API of the service specified by url'''
 	def send_request(self, method, url=None, params=[]):
+		print("api fetcher received request")
 		payload = {
 			'method':method,
 			'params':params,
