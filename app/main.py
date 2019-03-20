@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def hello():
-    return "Hello World from Flask"
+    return send_request('admin_peers')
 
 
 if __name__ == "__main__":
