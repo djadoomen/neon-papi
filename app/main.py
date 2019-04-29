@@ -28,6 +28,13 @@ def setup_peers():
 def ip():
 	return ' '.join(api.register_ips())
 
+@app.route("/mine")
+def mine():
+	responses = api.start_mining()
+	dump = []
+	for res in responses:
+		dump.append(json.dumps(res, indent=4))
+	return '\n------------------------------\n'.join(dump)
 
 # if __name__ == "__main__":
 #     app.run(host='127.0.0.1', debug=True, port=80)

@@ -3,7 +3,7 @@ import json, requests, socket
 _URL = "http://node:8545/"
 _HEADERS = {'content-type': 'application/json'}
 
-def send_request(method, params=[], url=None):
+def send_request(method, params=[], url=_URL):
 	payload = {
 		'method':method,
 		'params':params,
@@ -11,14 +11,14 @@ def send_request(method, params=[], url=None):
 		'jsonrpc':'2.0'
 	}
 	return requests.post(
-		_URL if url is None else url,
+		url,
 		data=json.dumps(payload),
 		headers=_HEADERS
 	)
 
 def register_ips():
 	ips = []
-	for i in range(20):
+	while len(ips) < 2:
 		ip = socket.gethostbyname('tasks.node')
 		if ip not in ips:
 			ips.append(ip)
@@ -38,6 +38,15 @@ def setup_peers():
 		success = send_request('admin_addPeer', [nodes[i].replace('127.0.0.1', ips[i])])
 		print(success.json())
 	return nodes
+
+def start_mining():
+	ips = register_ips()
+	responses = []
+	for ip in ips:
+		res = send_request('miner_start', [1], 'http://' + ip + ':8545/').json()
+		responses.append(res)
+	return responses
+
 # {
 # "jsonrpc":"2.0",
 # "id":1,
