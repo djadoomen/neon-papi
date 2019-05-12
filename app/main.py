@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request
 
 import api_fetcher as api
 
@@ -7,6 +7,10 @@ app = Flask(__name__)
 @app.route("/")
 def index():
     return api.send_request('admin_peers').text
+
+@app.route("/sendTransaction")
+def sendTransaction():
+    return request.data
 
 @app.route("/balance")
 def balance():
