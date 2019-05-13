@@ -1,6 +1,7 @@
 from flask import Flask, request
 
 import api_fetcher as api
+import json
 
 app = Flask(__name__)
 
@@ -8,13 +9,14 @@ app = Flask(__name__)
 def index():
     return api.send_request('admin_peers').text
 
-@app.route("/sendTransaction")
+@app.route("/send_transaction", methods=['POST'])
 def sendTransaction():
-    return request.data
+    rawTransaction = json.loads(request.data)['transaction']
+    return api.send_request('eth_sendRawTransaction', [rawTransaction]).text
 
-@app.route("/balance")
-def balance():
-	return api.send_request('eth_getBalance', ["0xb936b619831b77910fb38eed3f80791de6ca21b7", "latest"]).text
+@app.route("/balance/<account>")
+def balance(account):
+	return api.send_request('eth_getBalance', [account, "latest"]).text
 
 @app.route("/peers")
 def peers():

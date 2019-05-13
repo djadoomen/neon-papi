@@ -10,7 +10,7 @@ fi
 for char in "${1:1}"; do
   case "$char" in
     b)
-      docker build -t valentinorban/neon:papi .;;
+      docker build --force-rm -t valentinorban/neon:papi .;;
     p)
       docker push valentinorban/neon:papi;;
     q)
