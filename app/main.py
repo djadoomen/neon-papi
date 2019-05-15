@@ -11,8 +11,25 @@ def index():
 
 @app.route("/send_transaction", methods=['POST'])
 def sendTransaction():
-    rawTransaction = json.loads(request.data)['transaction']
-    return api.send_request('eth_sendRawTransaction', [rawTransaction]).text
+    transaction = json.loads(request.data)['transaction']
+    return api.send_request('eth_sendRawTransaction', [transaction]).text
+
+@app.route("/execute", methods=['POST'])
+def execute():
+    data = json.loads(request.data)
+    return api.send_request(data['method'], data['params']).text
+
+@app.route("/transaction_receipt/<transaction_hash>")
+def transaction_receipt(transaction_hash):
+    return api.send_request('eth_getTransactionReceipt', [transaction_hash]).text
+
+@app.route("/transaction/<transaction_hash>")
+def transaction(transaction_hash):
+    return api.send_request('eth_getTransactionByHash', [transaction_hash]).text
+
+@app.route("/pending_transactions")
+def pending_transactions():
+    return api.send_request('eth_pendingTransactions').text
 
 @app.route("/balance/<account>")
 def balance(account):
