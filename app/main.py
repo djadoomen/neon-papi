@@ -27,6 +27,18 @@ def transaction_receipt(transaction_hash):
 def transaction(transaction_hash):
     return api.send_request('eth_getTransactionByHash', [transaction_hash]).text
 
+@app.route("/block/<number>")
+def block(number):
+    return api.send_request('eth_getBlockByNumber', [number, True]).text
+
+@app.route("/block_number")
+def block_number():
+    return api.send_request('eth_blockNumber').text
+
+@app.route("/transaction_nonce/<account>")
+def transaction_nonce():
+    return api.send_request('eth_getTransactionCount', [account, "latest"]).text
+
 @app.route("/pending_transactions")
 def pending_transactions():
     return api.send_request('eth_pendingTransactions').text
@@ -39,17 +51,9 @@ def balance(account):
 def peers():
 	return api.send_request('net_peerCount').text
 
-@app.route("/info")
-def info():
-	return api.send_request('admin_nodeInfo').text
-
 @app.route("/setup_peers")
 def setup_peers():
 	return '\n'.join(api.setup_peers())
-
-@app.route("/ip")
-def ip():
-	return ' '.join(api.register_ips())
 
 @app.route("/mine")
 def mine():
