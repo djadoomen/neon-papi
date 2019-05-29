@@ -36,7 +36,7 @@ def block_number():
     return api.send_request('eth_blockNumber').text
 
 @app.route("/transaction_nonce/<account>")
-def transaction_nonce():
+def transaction_nonce(account):
     return api.send_request('eth_getTransactionCount', [account, "latest"]).text
 
 @app.route("/pending_transactions")
